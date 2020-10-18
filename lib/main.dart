@@ -1,3 +1,5 @@
+import 'package:bottom_sheet/utility/appAssets.dart';
+import 'package:bottom_sheet/utility/utility.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -28,11 +30,9 @@ class _MyAppState extends State<MyApp> {
   Widget body() {
     return Stack(
       children: [
-        Image.network(
+        Utility.imageLoader(
           "https://picsum.photos/200/300",
-          height: 400,
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.cover,
+          AppAssets.placeHolder,
         ),
         SizedBox.expand(
           child: NotificationListener<DraggableScrollableNotification>(
@@ -60,14 +60,32 @@ class _MyAppState extends State<MyApp> {
                         offset: Offset(-1, -1),
                       )
                     ],
-                    color: Colors.blue[100],
+                    color: Colors.white,
                   ),
-                  child: ListView.builder(
-                    controller: scrollController,
-                    itemCount: 25,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(title: Text('Item $index'));
-                    },
+                  child: Column(
+                    children: [
+                      Visibility(
+                        visible: extent != 1.0,
+                        child: Container(
+                          margin: EdgeInsets.only(top: 8),
+                          height: 5,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.black38,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          controller: scrollController,
+                          itemCount: 25,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ListTile(title: Text('Item $index'));
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 );
               },
